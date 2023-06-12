@@ -1,4 +1,4 @@
-const { User } = require('../models')
+const {User} = require('../models')
 
 module.exports = {
     async getUsers(req, res) {
@@ -42,4 +42,26 @@ module.exports = {
         res.status(500).json(err);
       }
     },
+    
+    async addFollower(req, res){
+      try{
+        const user = await User.findOne({ _id: req.params.userId })
+        user.friends.push(req.params.friendId)
+        res.status(200).json(user);
+        user.save()
+      }catch{
+        res.status(500).json(err);
+      }
+    },
+
+    async removeFollower(req, res){
+      try{
+        const user = await User.findOne({ _id: req.params.userId })
+        user.friends.splice(user.friends.indexOf(req.params.friendId),1)
+        res.status(200).json(user);
+        user.save()
+      }catch{
+        res.status(500).json(err);
+      }
+    }
       }

@@ -12,9 +12,10 @@ const thoughtSchema = new Schema({
     },{timestamps: true})
     
     const Thought = model('thought', thoughtSchema);
+    const Reaction = model('reaction', reactionSchema)
 
     thoughtSchema.virtual('reactionCount').get(function () {
         return this.reactions.length;
       });
 
-    module.exports = Thought;
+    module.exports = {Thought, Reaction}
