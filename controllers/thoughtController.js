@@ -72,6 +72,16 @@ module.exports = {
         }catch{
           res.status(500).json(err);
         }
+      },
+
+      async updateThought(req,res){
+        try{
+          const updatedThought = await req.body
+          await Thought.findByIdAndUpdate(req.params.thoughtId, updatedThought)
+          res.status(200).json(updatedThought)
+        }catch{
+          res.status(500).json(err);
+        }
       }
   };
   

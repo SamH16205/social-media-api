@@ -1,4 +1,5 @@
-const {User} = require('../models')
+const {User} = require('../models');
+const { findByIdAndUpdate } = require('../models/User');
 
 module.exports = {
     async getUsers(req, res) {
@@ -60,6 +61,16 @@ module.exports = {
         user.friends.splice(user.friends.indexOf(req.params.friendId),1)
         res.status(200).json(user);
         user.save()
+      }catch{
+        res.status(500).json(err);
+      }
+    },
+
+    async updateUser(req,res){
+      try{
+        const updatedUser = await req.body
+        await User.findByIdAndUpdate(req.params.userId, updatedUser)
+        res.status(200).json(updatedUser)
       }catch{
         res.status(500).json(err);
       }
